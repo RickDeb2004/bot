@@ -12,7 +12,7 @@ var goBot *discordgo.Session
 
 func Start() {
 
-	goBot, err := discordgo.New("Bot  " + config.Token)
+	goBot, err := discordgo.New("Bot " + config.Token)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
