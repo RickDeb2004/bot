@@ -34,6 +34,44 @@ func Start() {
 	fmt.Println("Bot is running")
 
 }
+
+	func sendCustomEmbed(session *discordgo.Session, channelID string) {
+		embed := &discordgo.MessageEmbed{
+			URL:         "",
+			Type:        "",
+			Title:       "Custom Embed",
+			Description: "This is a custom embed message.",
+			Timestamp:   "",
+			Color:       0x00ff00, // Green color
+			Footer:      nil,
+			Image:       nil,
+			Thumbnail:   nil,
+			Video:       nil,
+			Provider:    nil,
+			Fields: []*discordgo.MessageEmbedField{
+				{
+					Name:   "Field 1",
+					Value:  "Value 1",
+					Inline: false,
+				},
+				{
+					Name:   "Field 2",
+					Value:  "Value 2",
+					Inline: false,
+				},
+			},
+		}
+}
+// Send the embedded message using Channel Message with Embedded (CME).
+var _ error
+ _,err:=session.ChannelMessageAndEmbded(channelID,embed)
+ // Check for errors and handle them appropriately
+if err!=nil{
+	fmt.Println(err.Error())
+	return 
+}
+
+
 func messageHandler(session *discordgo.Session, message *discordgo.MessageCreate) {
 	if message.Author.ID == BotID {
 		return
@@ -45,10 +83,14 @@ func messageHandler(session *discordgo.Session, message *discordgo.MessageCreate
 		if message.Content=="!startquiz" {
 			StartQuiz(session, message.ChannelID)
 		}
-		else {
-			ananswerQuestion(session,message)
-	 } 
+		
 
+	}
+	else if message.Content=="!customembeded"{
+		sendCustomEmbed(session,message.ChannelID)
+	}
+	else {
+		answerQanswerQuestion(session,message)
 	}
 	  
 }
