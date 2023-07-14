@@ -34,17 +34,18 @@ func Start() {
 	fmt.Println("Bot is running")
 
 }
-func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if m.Author.ID == BotID {
+func messageHandler(session *discordgo.Session, message *discordgo.MessageCreate) {
+	if message.Author.ID == BotID {
 		return
 	}
-	if m.Content == "hello" {
-		_, _ = s.ChannelMessageSend(m.ChannelID, "hello, welcome to hackNITR discord server")
+	if message.Content == "hello" {
+		_, _ = session.ChannelMessageSend(message.ChannelID, "hello, welcome to hackNITR discord server")
 	}
-	else if m.Content=="!startquiz" {
-		StartQuiz(s, m.ChannelID)
+	 else if message.Content=="!startquiz" {
+		StartQuiz(session, message.ChannelID)
 	}
-	else{
+	else {
+		ananswerQuestion(session,message)
 
 	}
 	  
