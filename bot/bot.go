@@ -24,6 +24,8 @@ func Start() {
 	}
 	BotID = u.ID
 	goBot.AddHandler(messageHandler)
+
+	goBot.AddHandler(answerQuestion)
 	err = goBot.Open()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -39,4 +41,11 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Content == "hello" {
 		_, _ = s.ChannelMessageSend(m.ChannelID, "hello, welcome to hackNITR discord server")
 	}
+	else if m.Content=="!startquiz" {
+		StartQuiz(s, m.ChannelID)
+	}
+	else{
+
+	}
+	  
 }
