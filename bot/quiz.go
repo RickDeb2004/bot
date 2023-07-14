@@ -69,7 +69,7 @@ func clearQuizData() {
 		quizTimer = nil
 	}
 }
-func answerQuestion(session *discordgo.Session, message *discordgo.MessageCreate){
+func AnswerQuestion(session *discordgo.Session, message *discordgo.MessageCreate){
 	if !quizActive {
 		return
 	}
