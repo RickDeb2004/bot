@@ -3,7 +3,7 @@ package bot
 import (
 	"discord-bot/config"
 	"fmt"
-
+	_ "discord-bot/bot/quiz"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -41,11 +41,13 @@ func messageHandler(session *discordgo.Session, message *discordgo.MessageCreate
 	if message.Content == "hello" {
 		_, _ = session.ChannelMessageSend(message.ChannelID, "hello, welcome to hackNITR discord server")
 	}
-	 else if message.Content=="!startquiz" {
-		StartQuiz(session, message.ChannelID)
-	}
-	else {
-		ananswerQuestion(session,message)
+	 else {
+		if message.Content=="!startquiz" {
+			StartQuiz(session, message.ChannelID)
+		}
+		else {
+			ananswerQuestion(session,message)
+	 } 
 
 	}
 	  
