@@ -5,10 +5,18 @@ import (
 	"fmt"
 	_ "discord-bot/bot/quiz"
 	"github.com/bwmarrin/discordgo"
+	_ "discord-bot/bot/poll"
+	"strings"
 )
 
 var BotID string
 var goBot *discordgo.Session
+var (
+	pollMessageID  string
+	pollOptions    []string
+	reactionEmojis = []string{"1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"}
+)
+
 
 func Start() {
 
@@ -26,6 +34,7 @@ func Start() {
 	goBot.AddHandler(messageHandler)
 
 	goBot.AddHandler(answerQuestion)
+	goBot.AddHandler(handleReactionAdd) 
 	err = goBot.Open()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -89,6 +98,19 @@ func messageHandler(session *discordgo.Session, message *discordgo.MessageCreate
 	else if message.Content=="!customembeded"{
 		sendCustomEmbed(session,message.ChannelID)
 	}
+	else if strings.HasPrefix(message.Content, "!poll") {
+		args := strings.Split(message.Content, " ")
+		if len(args) < 3 {
+			session.ChannelMessageSend(message.ChannelID, "Invalid poll command. Usage: `!poll <question> <option1> <option2> ...`")
+			return
+		}
+
+		question := args[1]
+		options := args[3:]
+
+		createPoll(session, message.ChannelID, question, options)
+	}
+
 	else {
 		answerQanswerQuestion(session,message)
 	}
