@@ -8,6 +8,7 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 )
+const crossEmoji = "❌"
 
 var (
 	questions = []Question{
@@ -77,6 +78,8 @@ func AnswerQuestion(session *discordgo.Session, message *discordgo.MessageCreate
 
 	if strings.EqualFold(message.Content, CurrentQuestion.Answer) {
 		participants[message.Author.ID] = true
+	}else{
+		session.MessageReactionAdd(message.ChannelID,message.ID,crossEmoji)
 	}
 
 }
