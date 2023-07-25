@@ -33,6 +33,7 @@ func Start() {
 
 	goBot.AddHandler(AnswerQuestion)
 	goBot.AddHandler(handleReactionAdd)
+	goBot.AddHandler(DelMessages)
 	err = goBot.Open()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -101,7 +102,9 @@ func messageHandler(session *discordgo.Session, message *discordgo.MessageCreate
 		options := args[3:]
 
 		createPoll(session, message.ChannelID, question, options)
-	} else {
+	} else if message.Content=="!purgemessages"{
+          DelMessages(session,message)
+	}else {
 		AnswerQuestion(session, message)
 	}
 
