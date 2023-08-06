@@ -33,7 +33,7 @@ var payLoad GithubWebPayLoad
 		return
 	}
 	message:=fmt.Sprintf("New push to GitHub Repository :%s",payLoad.Repository.Name)
-	session.ChannelMessageSend(Discord_Channel_ID,message)
+	session.ChannelMessageSend("1128709087958421596",message)
 	session.Close()
 	w.WriteHeader(http.StatusOK)
 
