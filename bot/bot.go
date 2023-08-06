@@ -3,6 +3,7 @@ package bot
 import (
 	"discord-bot/config"
 	"fmt"
+	"net/http"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
@@ -34,6 +35,18 @@ func Start() {
 	goBot.AddHandler(AnswerQuestion)
 	goBot.AddHandler(handleReactionAdd)
 	goBot.AddHandler(DelMessages)
+	
+		// Start the webhook server for GitHub integration
+	http.HandleFunc("/github-webhook", WebhookHandler)
+	go func() {
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			fmt.Println("Failed to start GitHub webhook server:", err)
+		}
+	}()
+
+	
+
 	err = goBot.Open()
 	if err != nil {
 		fmt.Println(err.Error())
